@@ -13,12 +13,13 @@ public class LoggerDao {
     public static int insertEventData(EventData eventData) {
         Connection conn = null;
         Statement stmt = null;
-        String db = "jdbc:hsqldb:hsql://localhost/eventData;ifexists=true";
+        String db = "jdbc:hsqldb:file:eventdata/eventData";
         String user = "SA";
         String password = "";
         int result = 0;
         try {
             // Create database connection
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
             conn = DriverManager.getConnection(db, user, password);
 
             // Create and execute statement
@@ -31,7 +32,7 @@ public class LoggerDao {
                              ")");
             conn.commit();
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             logger.error(e.getMessage());
         }
         finally {
